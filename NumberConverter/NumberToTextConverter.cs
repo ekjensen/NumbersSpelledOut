@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
+using System.Text.RegularExpressions;
 
-namespace ConsoleApp2
+namespace NumberConverter
 {
-    class NumberToTextConverter
+    public class NumberToTextConverter
     {
         public LetterCase Case { get; }
         public string Seperator { get; }
@@ -262,17 +261,17 @@ namespace ConsoleApp2
             return counter;
         }
 
-        public string GetText(int number)
+        public string GetText(int originalNumber)
         {
-            var negativeText = number < 0 ? "negative" : "";
-            number = Math.Abs(number);
-            var thousandsText = GetThousandsText(number);
-            var hundredsText = GetHundredsText(number);
-            var tensText = GetTensText(number);
+            var negativeText = originalNumber < 0 ? "negative" : "";
+            var absoluteValueOfNumber = Math.Abs(originalNumber);
+            var thousandsText = GetThousandsText(absoluteValueOfNumber);
+            var hundredsText = GetHundredsText(absoluteValueOfNumber);
+            var tensText = GetTensText(absoluteValueOfNumber);
 
             // Get the ones text if it is not already used by the tens text.
             string onesText;
-            var numberOfTens = GetNumberOf(DecimalPosition.Tens, number);
+            var numberOfTens = GetNumberOf(DecimalPosition.Tens, absoluteValueOfNumber);
             bool isTeen = numberOfTens == 1;
             // If the number is a teen, the ones position is 
             // covered by the get tens text. 
@@ -284,14 +283,26 @@ namespace ConsoleApp2
             // text is still needed. 
             else
             {
-                onesText = GetOnesText(number);
+                onesText = GetOnesText(absoluteValueOfNumber);
             }
 
             // Combine the text into a single string. 
-            var defaultText = string.Join(" ", negativeText, thousandsText, hundredsText, tensText, onesText);
-            var words = defaultText.Split(' ');
+            var numberWithSpaces = string.Join(" ", negativeText, thousandsText, hundredsText, tensText, onesText);
 
+            return AddOptions(numberWithSpaces, originalNumber);
+        }
 
+        private string AddOptions(string numberWithSpaces, int originalNumber)
+        {
+            // Trim the string.
+            var timmedString = numberWithSpaces.Trim();
+
+            // Remove duplicate spaces.
+            RegexOptions options = RegexOptions.None;
+            Regex regex = new Regex("[ ]{2,}", options);
+            var singleSpaced = regex.Replace(timmedString, " ");
+            var words = singleSpaced.Split(' ');
+ 
             if (Case == LetterCase.UpperCase)
             {
                 var upperCaseWords = words.Select(w => w.ToUpper()).ToArray();
@@ -306,11 +317,11 @@ namespace ConsoleApp2
 
             if (Case == LetterCase.TitleCase)
             {
-                var titleText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(defaultText.ToLower());
+                var titleText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(singleSpaced.ToLower());
                 var titleTextWords = titleText.Split(' ');
                 return string.Join(Seperator, titleTextWords);
             }
-            
+
             throw new NotImplementedException(Case + " is not supported.");
         }
 
@@ -323,7 +334,7 @@ namespace ConsoleApp2
         }
     }
 
-    enum LetterCase
+    public enum LetterCase
     {
         TitleCase,
         UpperCase,
