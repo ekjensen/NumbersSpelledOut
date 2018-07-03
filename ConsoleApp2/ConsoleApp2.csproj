@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NumberConverter\NumberConverter.csproj">
+      <Project>{B7D2824A-DD58-41BA-8597-2E9BD93003F6}</Project>
+      <Name>NumberConverter</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

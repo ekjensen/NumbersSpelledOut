@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace NumberConverter
 {
     public class NumberToTextConverter
     {
         public LetterCase Case { get; }
-        public string Seperator { get; }
+        public string SpaceCharactor { get; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="letterCase"></param>
-        /// <param name="seperator">The charactor to use to seperate each word with.</param>
-        public NumberToTextConverter(LetterCase letterCase, string seperator = " ")
+        /// <param name="spaceCharactor">The charactor to use to seperate each word with.</param>
+        public NumberToTextConverter(LetterCase letterCase, string spaceCharactor = " ")
         {
             Case = letterCase;
-            Seperator = seperator;
+            SpaceCharactor = spaceCharactor;
         }
+
 
         private string GetThousandsText(int number)
         {
@@ -286,40 +287,96 @@ namespace NumberConverter
                 onesText = GetOnesText(absoluteValueOfNumber);
             }
 
-            // Combine the text into a single string. 
-            var numberWithSpaces = string.Join(" ", negativeText, thousandsText, hundredsText, tensText, onesText);
+            var didgetNumbers = new List<string>();
+            if (negativeText != "")
+            {
+                didgetNumbers.Add(negativeText);
+            }
 
-            return AddOptions(numberWithSpaces, originalNumber);
+            if (thousandsText != "")
+            {
+                didgetNumbers.Add(thousandsText);
+            }
+
+            if (hundredsText != "")
+            {
+                didgetNumbers.Add(hundredsText);
+            }
+
+            if (tensText != "")
+            {
+                didgetNumbers.Add(tensText);
+            }
+
+            if (onesText != "")
+            {
+                didgetNumbers.Add(onesText);
+            }
+
+            return AddOptions(originalNumber, didgetNumbers.ToArray());
         }
 
-        private string AddOptions(string numberWithSpaces, int originalNumber)
+        private string[] AddAnd(int originalNumber, string[] didgetWords)
         {
-            // Trim the string.
-            var timmedString = numberWithSpaces.Trim();
+            var hasOnes = GetNumberOf(DecimalPosition.Ones, originalNumber) > 0;
+            var hasTens = GetNumberOf(DecimalPosition.Tens, originalNumber) > 0;
+            var hasHundereds = GetNumberOf(DecimalPosition.Hundreds, originalNumber) > 0;
+            var hasThousands = GetNumberOf(DecimalPosition.Thousands, originalNumber) > 0;
+            var hasHundresOrThousands = hasHundereds || hasThousands;
+            
+            // There will be the word and added if there is a decimal position in the hundreds or greater,
+            // and if there is a ones or a tens. 
+            if (didgetWords.Length >= 2)
+            {
+                if (hasOnes && hasTens && hasHundresOrThousands)
+                {
+                    var didgetNumberList = new List<string>(didgetWords);
+                    didgetNumberList.Insert(didgetWords.Length - 2, "and");
+                    return didgetNumberList.ToArray();
+                }
+                if (hasOnes ^ hasTens && hasHundresOrThousands) // Exclusive or. 
+                {
+                    var didgetNumberList = new List<string>(didgetWords);
+                    didgetNumberList.Insert(didgetWords.Length - 1, "and");
+                    return didgetNumberList.ToArray();
+                }
+            }
+            // There is no need to add the word and. 
+            
+            return didgetWords;
+        }
 
-            // Remove duplicate spaces.
-            RegexOptions options = RegexOptions.None;
-            Regex regex = new Regex("[ ]{2,}", options);
-            var singleSpaced = regex.Replace(timmedString, " ");
-            var words = singleSpaced.Split(' ');
+        private string AddOptions(int originalNumber, string[] didgetWords)
+        {
+            var didgetNumbersWithAnd = AddAnd(originalNumber, didgetWords);
  
             if (Case == LetterCase.UpperCase)
             {
-                var upperCaseWords = words.Select(w => w.ToUpper()).ToArray();
-                return string.Join(Seperator, upperCaseWords);
+                var upperCaseWords = didgetNumbersWithAnd.Select(
+                    word => word.ToUpper().Replace(" ", SpaceCharactor));
+
+                return string.Join(SpaceCharactor, upperCaseWords);
             }
 
             if (Case == LetterCase.LowerCase)
             {
-                var lowerCaseWords = words.Select(w => w.ToLower()).ToArray();
-                return string.Join(Seperator, lowerCaseWords);
+                var lowerCaseWords = didgetNumbersWithAnd.Select(
+                    word => word.ToLower().Replace(" ", SpaceCharactor));
+
+                return string.Join(SpaceCharactor, lowerCaseWords);
             }
 
             if (Case == LetterCase.TitleCase)
             {
-                var titleText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(singleSpaced.ToLower());
-                var titleTextWords = titleText.Split(' ');
-                return string.Join(Seperator, titleTextWords);
+                var titleWords = didgetNumbersWithAnd.Select(word =>
+                        CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word.ToLower())
+                            .Replace(" ", SpaceCharactor)).ToList();
+
+                // And should be lower case. 
+                var index = titleWords.FindIndex(tw => tw == "And");
+                titleWords[index] = "and";
+
+                return string.Join(SpaceCharactor, titleWords);
             }
 
             throw new NotImplementedException(Case + " is not supported.");
