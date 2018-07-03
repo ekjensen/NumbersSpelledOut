@@ -120,12 +120,15 @@ namespace ConsoleApp2
                 Console.Write(" hundred ");
             }
 
+            // Write out the tens. 
             int tensCounter = 0;
             while (number >= 10)
             {
                 tensCounter++;
                 number -= 10;
             }
+            // Single counter is included here because 
+            // they are needed to writ out the teens. 
             int singleCounter = 0;
             while (number >= 1)
             {
@@ -211,6 +214,9 @@ namespace ConsoleApp2
                 }
             }
 
+            // There were no tens to write out, so the 
+            // singles will not need to be written out 
+            // as teens. 
             if (singleCounter != 0 && tensCounter != 1)
             {
                 if (singleCounter == 9)
