@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NumberSpelledOut.cs" />
+    <Compile Include="FloatingPointSpelledOut.cs" />
+    <Compile Include="LetterCase.cs" />
+    <Compile Include="NonFloatingPointSpelledOut.cs" />
+    <Compile Include="Spellers\DecimalPosition.cs" />
+    <Compile Include="Spellers\FloatingPointSpeller.cs" />
     <Compile Include="Spellers\NumberToTextSpeller.cs" />
     <Compile Include="Spellers\NumberToTextSpellingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,7 +3,7 @@ using EKJensen.NumbersSpelledOut.Spellers;
 
 namespace EKJensen.NumbersSpelledOut
 {
-    public static class NumberSpelledOut
+    public static class NonFloatingPointSpelledOut
     {
         public static string ToNumberString(this long number, LetterCase caseOptions = LetterCase.LowerCase)
         {

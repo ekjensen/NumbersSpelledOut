@@ -3,7 +3,7 @@
 namespace EKJensen.NumbersSpelledOut.Tests
 {
     [TestClass]
-    public class NumberToTextConverterTests
+    public class NonFloatingPointSpelledOutTests
     {
         [TestMethod]
         public void Converts_thousands()

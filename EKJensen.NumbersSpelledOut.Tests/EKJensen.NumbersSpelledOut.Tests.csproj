@@ -48,8 +48,9 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NumberToTextConverterTests.cs" />
+    <Compile Include="NonFloatingPointSpelledOutTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FloatingPointSpelledOutTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
