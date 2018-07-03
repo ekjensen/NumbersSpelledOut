@@ -1,13 +1,10 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
 
-namespace EKJensen.NumbersSpelledOut
+namespace EKJensen.NumbersSpelledOut.Spellers
 {
-    internal class NumberToTextConverter
+    internal class NumberToTextSpeller
     {
         public LetterCase Case { get; }
         public string SpaceCharactor { get; }
@@ -17,7 +14,7 @@ namespace EKJensen.NumbersSpelledOut
         /// </summary>
         /// <param name="letterCase"></param>
         /// <param name="spaceCharactor">The charactor to use to seperate each word with.</param>
-        public NumberToTextConverter(LetterCase letterCase)
+        public NumberToTextSpeller(LetterCase letterCase)
         {
             Case = letterCase;
             SpaceCharactor = " ";
@@ -37,7 +34,7 @@ namespace EKJensen.NumbersSpelledOut
                 var substring = longText.Substring(nextStartingIndex, len + 3 - 21);
                 nextStartingIndex = len % 3;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Septillions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Septillions, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -48,7 +45,7 @@ namespace EKJensen.NumbersSpelledOut
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Quadrillions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Quadrillions, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -59,7 +56,7 @@ namespace EKJensen.NumbersSpelledOut
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Trillions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Trillions, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -70,7 +67,7 @@ namespace EKJensen.NumbersSpelledOut
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Billions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Billions, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -81,7 +78,7 @@ namespace EKJensen.NumbersSpelledOut
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Millions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Millions, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -92,7 +89,7 @@ namespace EKJensen.NumbersSpelledOut
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Thousands, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Thousands, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -102,7 +99,7 @@ namespace EKJensen.NumbersSpelledOut
                 var forHowMany = len >= 3 ? 3 : len;
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextHelper(DecimalPosition.Ones, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Ones, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
 
                 if (text == "zero")
@@ -161,25 +158,5 @@ namespace EKJensen.NumbersSpelledOut
 
             return text;
         }
-    }
-
-    public enum LetterCase
-    {
-        TitleCase,
-        UpperCase,
-        LowerCase
-    }
-
-    internal enum DecimalPosition
-    {
-        Septillions = 19,
-        Quadrillions = 16,
-        Trillions = 13,
-        Billions = 10,
-        Millions = 7,
-        Thousands = 4,
-        Hundreds = 3,
-        Tens = 2,
-        Ones = 1
     }
 }

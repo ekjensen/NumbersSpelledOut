@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EKJensen.NumbersSpelledOut
+namespace EKJensen.NumbersSpelledOut.Spellers
 {
-    internal class NumberToTextHelper
+    internal class NumberToTextSpellingHelper
     {
         public string DecimalGrouping { get; }
         public LetterCase LetterCase { get; }
         public string SpaceCharactor { get; }
 
-        public NumberToTextHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase, string spaceCharactor = " ")
+        public NumberToTextSpellingHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase, string spaceCharactor = " ")
         {
             switch (decimalPositionGrouping)
             {

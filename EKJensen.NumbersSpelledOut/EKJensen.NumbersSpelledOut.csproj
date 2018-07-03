@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NumberToText.cs" />
-    <Compile Include="NumberToTextConverter.cs" />
-    <Compile Include="NumberToTextHelper.cs" />
+    <Compile Include="NumberSpelledOut.cs" />
+    <Compile Include="Spellers\NumberToTextSpeller.cs" />
+    <Compile Include="Spellers\NumberToTextSpellingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
