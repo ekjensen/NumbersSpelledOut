@@ -24,32 +24,13 @@ namespace ConsoleApp2
 
         static string WrittenOut(int number)
         {
+            // Write out thousands. 
             int thousandCounter = 0;
-            int hundredCounter = 0;
-            int tensCounter = 0;
-            int singleCounter = 0;
-
             while (number >= 1000)
             {
                 thousandCounter++;
                 number -= 1000;
             }
-            while (number >= 100)
-            {
-                hundredCounter++;
-                number -= 100;
-            }
-            while (number >= 10)
-            {
-                tensCounter++;
-                number -= 10;
-            }
-            while (number >= 1)
-            {
-                singleCounter++;
-                number -= 1;
-            }
-          
             if (thousandCounter != 0)
             {
                 if (thousandCounter == 9)
@@ -90,6 +71,14 @@ namespace ConsoleApp2
                 }
                 Console.Write(" thousand");
             }
+
+            // Write out hundreds.
+            int hundredCounter = 0;
+            while (number >= 100)
+            {
+                hundredCounter++;
+                number -= 100;
+            }
             if (hundredCounter != 0)
             {
                 if (hundredCounter == 9)
@@ -129,6 +118,19 @@ namespace ConsoleApp2
                     Console.Write(" one");
                 }
                 Console.Write(" hundred ");
+            }
+
+            int tensCounter = 0;
+            while (number >= 10)
+            {
+                tensCounter++;
+                number -= 10;
+            }
+            int singleCounter = 0;
+            while (number >= 1)
+            {
+                singleCounter++;
+                number -= 1;
             }
             if (tensCounter != 0)
             {
@@ -206,9 +208,9 @@ namespace ConsoleApp2
                     {
                         Console.Write("ten");
                     }
-
                 }
             }
+
             if (singleCounter != 0 && tensCounter != 1)
             {
                 if (singleCounter == 9)
