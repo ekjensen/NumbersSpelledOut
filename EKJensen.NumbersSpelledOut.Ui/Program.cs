@@ -1,11 +1,7 @@
-﻿using NumberConverter;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using EKJensen.NumbersSpelledOut;
 
-namespace ConsoleApp2
+namespace EKJensen.NumbersSpelledOut.Ui
 {
     class Program
     {

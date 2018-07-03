@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using EKJensen.NumbersSpelledOut;
 
-namespace NumberConverter.Tests
+namespace EKJensen.NumbersSpelledOut.Tests
 {
     [TestClass]
     public class NumberToTextConverterTests

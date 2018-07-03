@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 
-namespace NumberConverter
+namespace EKJensen.NumbersSpelledOut
 {
     internal class NumberToTextConverter
     {

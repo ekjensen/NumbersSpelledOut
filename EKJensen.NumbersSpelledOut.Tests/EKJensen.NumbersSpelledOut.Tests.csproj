@@ -7,8 +7,8 @@
     <ProjectGuid>{014D8578-0066-4D7B-8A30-4BCB1C5FABEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NumberConverter.Tests</RootNamespace>
-    <AssemblyName>NumberConverter.Tests</AssemblyName>
+    <RootNamespace>EKJensen.NumbersSpelledOut.Tests</RootNamespace>
+    <AssemblyName>EKJensen.NumbersSpelledOut.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,9 +55,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NumberConverter\NumberConverter.csproj">
-      <Project>{B7D2824A-DD58-41BA-8597-2E9BD93003F6}</Project>
-      <Name>NumberConverter</Name>
+    <ProjectReference Include="..\EKJensen.NumbersSpelledOut\EKJensen.NumbersSpelledOut.csproj">
+      <Project>{a9f20a24-1960-475e-a06a-2ce77e477f76}</Project>
+      <Name>EKJensen.NumbersSpelledOut</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NumberConverter
+namespace EKJensen.NumbersSpelledOut
 {
     internal class NumberToTextHelper
     {
