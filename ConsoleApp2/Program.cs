@@ -13,25 +13,10 @@ namespace ConsoleApp2
         {
             Console.WriteLine("Enter Your number to be converted: ");
             string input = Console.ReadLine();
-            int number = Convert.ToInt32(input);
-
-            // Validate the user's input.
-            // The number only supports up to thousands. 
-            if (number > 9999)
-            {
-                Console.WriteLine("This program only supports numbers up to 9999");
-                return;
-            }
-            // The program does not support negative numbers. 
-            if (number < -9999)
-            {
-                Console.WriteLine("This program only accepts numbers greather or equal to -9999.");
-                return;
-            }
+            var number = Convert.ToInt64(input);
 
             Console.WriteLine("The number you entered was: ");
-            var converter = new NumberToTextConverter(LetterCase.TitleCase, "-uhhh-");
-            var fullNumberText = converter.GetText(number);
+            var fullNumberText = number.ToNumberString();
             Console.WriteLine(fullNumberText);
 
             Console.WriteLine("Press any key to continue.");

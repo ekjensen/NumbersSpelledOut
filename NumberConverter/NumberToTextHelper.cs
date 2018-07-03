@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace NumberConverter
 {
-    class NumberToTextHelper
+    internal class NumberToTextHelper
     {
         public string DecimalGrouping { get; }
         public LetterCase LetterCase { get; }
         public string SpaceCharactor { get; }
 
-        public NumberToTextHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase)
+        public NumberToTextHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase, string spaceCharactor = " ")
         {
             switch (decimalPositionGrouping)
             {
@@ -43,7 +43,7 @@ namespace NumberConverter
 
             }
             LetterCase = letterCase;
-            SpaceCharactor = " ";
+            SpaceCharactor = spaceCharactor;
         }
 
         private string GetHundredsText(int number)

@@ -7,7 +7,7 @@ using System.Runtime.Remoting.Messaging;
 
 namespace NumberConverter
 {
-    public class NumberToTextConverter
+    internal class NumberToTextConverter
     {
         public LetterCase Case { get; }
         public string SpaceCharactor { get; }
@@ -23,7 +23,7 @@ namespace NumberConverter
             SpaceCharactor = " ";
         }
 
-        public string GetText(long number)
+        public string GetText(ulong number)
         {
             var longText = number.ToString();
             var len = longText.Length;
@@ -39,7 +39,7 @@ namespace NumberConverter
                 var trimmedNumber = int.Parse(substring);
                 var helper = new NumberToTextHelper(DecimalPosition.Septillions, Case, SpaceCharactor);
                 var text = helper.GetText(trimmedNumber);
-                if(trimmedNumber > 0) numberParts.Add(text);
+                if (trimmedNumber > 0) numberParts.Add(text);
             }
             // Quadrillions
             if (len >= 16)
@@ -131,6 +131,36 @@ namespace NumberConverter
 
             return string.Join(SpaceCharactor, numberParts);
         }
+
+        public string GetText(long number)
+        {
+            var negative = "";
+            if(number < 0)
+            {
+                negative = "negative";
+            }
+
+            var text = GetText((ulong)Math.Abs(number));
+            if (negative == "") return text;
+            switch (Case)
+            {
+                case LetterCase.LowerCase:
+                    text = negative + SpaceCharactor + text;
+                    break;
+                case LetterCase.UpperCase:
+                    text = negative + SpaceCharactor + text;
+                    break;
+                case LetterCase.TitleCase:
+                    text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(negative.ToLower())
+                        + SpaceCharactor
+                        + text;
+                    break;
+                default:
+                    throw new NotImplementedException(Case + " is not supported.");
+            }
+
+            return text;
+        }
     }
 
     public enum LetterCase
@@ -140,7 +170,7 @@ namespace NumberConverter
         LowerCase
     }
 
-    enum DecimalPosition
+    internal enum DecimalPosition
     {
         Septillions = 19,
         Quadrillions = 16,

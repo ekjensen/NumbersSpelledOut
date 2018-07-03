@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LongToText.cs" />
     <Compile Include="NumberToTextConverter.cs" />
     <Compile Include="NumberToTextHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
