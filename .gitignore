@@ -342,5 +342,6 @@ ASALocalRun/
 
 
 #Custom gitignore stuff
-ConsoleApp2/obj/
-ConsoleApp2/bin/
+ConsoleApp2\obj\
+ConsoleApp2\bin\
+.vs\
