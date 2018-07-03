@@ -1,14 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConsoleApp2
 {
     class NumberToTextConverter
     {
-        static string GetThousandsText(int number)
+        public LetterCase Case { get; }
+        public string Seperator { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="letterCase"></param>
+        /// <param name="seperator">The charactor to use to seperate each word with.</param>
+        public NumberToTextConverter(LetterCase letterCase, string seperator = " ")
+        {
+            Case = letterCase;
+            Seperator = seperator;
+        }
+
+        private string GetThousandsText(int number)
         {
             var thousandCounter = GetNumberOf(DecimalPosition.Thousands, number);
 
@@ -55,7 +69,7 @@ namespace ConsoleApp2
             return "";
         }
 
-        static string GetHundredsText(int number)
+        private string GetHundredsText(int number)
         {
             int hundredCounter = GetNumberOf(DecimalPosition.Hundreds, number);
 
@@ -101,93 +115,91 @@ namespace ConsoleApp2
             return "";
         }
 
-        public static string GetTensText(int number)
+        private string GetTensText(int number)
         {
             int tensCounter = GetNumberOf(DecimalPosition.Tens, number);
             int onesCounter = GetNumberOf(DecimalPosition.Ones, number);
 
-            if (tensCounter != 0)
+            if (tensCounter == 9)
             {
-                if (tensCounter == 9)
+                return "ninety";
+            }
+            if (tensCounter == 8)
+            {
+                return "eighty";
+            }
+            if (tensCounter == 7)
+            {
+                return "seventy";
+            }
+            if (tensCounter == 6)
+            {
+                return "sixty";
+            }
+            if (tensCounter == 5)
+            {
+                return "fifty";
+            }
+            if (tensCounter == 4)
+            {
+                return "forty";
+            }
+            if (tensCounter == 3)
+            {
+                return "thirty";
+            }
+            if (tensCounter == 2)
+            {
+                return "twenty";
+            }
+            if (tensCounter == 1)
+            {
+                if (onesCounter == 9)
                 {
-                    return "ninety";
+                    return "nineteen";
                 }
-                if (tensCounter == 8)
+                if (onesCounter == 8)
                 {
-                    return "eighty";
+                    return "eighteen";
                 }
-                if (tensCounter == 7)
+                if (onesCounter == 7)
                 {
-                    return "seventy";
+                    return "seventeen";
                 }
-                if (tensCounter == 6)
+                if (onesCounter == 6)
                 {
-                    return "sixty";
+                    return "sixteen";
                 }
-                if (tensCounter == 5)
+                if (onesCounter == 5)
                 {
-                    return "fifty";
+                    return "fifteen";
                 }
-                if (tensCounter == 4)
+                if (onesCounter == 4)
                 {
-                    return "forty";
+                    return "fourteen";
                 }
-                if (tensCounter == 3)
+                if (onesCounter == 3)
                 {
-                    return "thirty";
+                    return "thirteen";
                 }
-                if (tensCounter == 2)
+                if (onesCounter == 2)
                 {
-                    return "twenty";
+                    return "twelve";
                 }
-                if (tensCounter == 1)
+                if (onesCounter == 1)
                 {
-                    if (onesCounter == 9)
-                    {
-                        return "nineteen";
-                    }
-                    if (onesCounter == 8)
-                    {
-                        return "eighteen";
-                    }
-                    if (onesCounter == 7)
-                    {
-                        return "seventeen";
-                    }
-                    if (onesCounter == 6)
-                    {
-                        return "sixteen";
-                    }
-                    if (onesCounter == 5)
-                    {
-                        return "fifteen";
-                    }
-                    if (onesCounter == 4)
-                    {
-                        return "fourteen";
-                    }
-                    if (onesCounter == 3)
-                    {
-                        return "thirteen";
-                    }
-                    if (onesCounter == 2)
-                    {
-                        return "twelve";
-                    }
-                    if (onesCounter == 1)
-                    {
-                        return "eleven";
-                    }
-                    if (onesCounter == 0)
-                    {
-                        return "ten";
-                    }
+                    return "eleven";
+                }
+                if (onesCounter == 0)
+                {
+                    return "ten";
                 }
             }
+            
             return "";
         }
 
-        public static string GetOnesText(int number)
+        private string GetOnesText(int number)
         {
             int singleCounter = GetNumberOf(DecimalPosition.Ones, number);
 
@@ -235,7 +247,7 @@ namespace ConsoleApp2
             return "";
         }
 
-        private static int GetNumberOf(DecimalPosition decimalPlace, int number)
+        private int GetNumberOf(DecimalPosition decimalPlace, int number)
         {
             // Check if the number has enough decimal places.
             // if not, there are zero of this decimal place. 
@@ -250,7 +262,7 @@ namespace ConsoleApp2
             return counter;
         }
 
-        public static string GetFullNumberText(int number)
+        public string GetText(int number)
         {
             var thousandsText = GetThousandsText(number);
             var hundredsText = GetHundredsText(number);
@@ -274,8 +286,30 @@ namespace ConsoleApp2
             }
 
             // Combine the text into a single string. 
-            var fullNumber = string.Join(" ", thousandsText, hundredsText, tensText, onesText);
-            return fullNumber;
+            var defaultText = string.Join(" ", thousandsText, hundredsText, tensText, onesText);
+            var words = defaultText.Split(' ');
+
+
+            if (Case == LetterCase.UpperCase)
+            {
+                var upperCaseWords = words.Select(w => w.ToUpper()).ToArray();
+                return string.Join(Seperator, upperCaseWords);
+            }
+
+            if (Case == LetterCase.LowerCase)
+            {
+                var lowerCaseWords = words.Select(w => w.ToLower()).ToArray();
+                return string.Join(Seperator, lowerCaseWords);
+            }
+
+            if (Case == LetterCase.TitleCase)
+            {
+                var titleText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(defaultText.ToLower());
+                var titleTextWords = titleText.Split(' ');
+                return string.Join(Seperator, titleTextWords);
+            }
+            
+            throw new NotImplementedException(Case + " is not supported.");
         }
 
         enum DecimalPosition
@@ -285,5 +319,12 @@ namespace ConsoleApp2
             Tens = 2,
             Ones = 1
         }
+    }
+
+    enum LetterCase
+    {
+        TitleCase,
+        UpperCase,
+        LowerCase
     }
 }

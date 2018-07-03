@@ -29,7 +29,8 @@ namespace ConsoleApp2
             }
 
             Console.WriteLine("The number you entered was: ");
-            var fullNumberText = NumberToTextConverter.GetText(number);
+            var converter = new NumberToTextConverter(LetterCase.TitleCase, "-uhhh-");
+            var fullNumberText = converter.GetText(number);
             Console.WriteLine(fullNumberText);
 
             Console.WriteLine("Press any key to continue.");
