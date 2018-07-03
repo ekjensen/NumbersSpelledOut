@@ -14,250 +14,303 @@ namespace ConsoleApp2
             Console.WriteLine("Enter Your number to be converted: ");
             string input = Console.ReadLine();
             int number = Convert.ToInt32(input);
-            WrittenOut(number);
 
-            if (input == "0")
+            // Validate the user's input.
+            if (number > 9999)
             {
-                Console.Write("zero");
+                Console.WriteLine("This program only supports numbers up to 9999");
+                return;
             }
+            if (number <= 0)
+            {
+                Console.WriteLine("This program only accepts numbers greather or equal to.");
+                return;
+            }
+
+            Console.WriteLine("The number you entered was: ");
+            var fullNumber = GetFullNumberText(number);
+            Console.WriteLine(fullNumber);
+
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
         }
 
-        static void WrittenOut(int number)
+        static string GetThousandsText(int number)
         {
-            // Write out thousands. 
-            int thousandCounter = 0;
-            while (number >= 1000)
+            var thousandCounter = GetNumberOf(DecimalPosition.Thousands, number);
+
+            // There are thousands, return the proper thousand text. 
+            var thousand = " thousand";
+            if (thousandCounter == 9)
             {
-                thousandCounter++;
-                number -= 1000;
+                return "nine" + thousand;
             }
-            if (thousandCounter != 0)
+            if (thousandCounter == 8)
             {
-                if (thousandCounter == 9)
-                {
-                    Console.Write("nine");
-                }
-                if (thousandCounter == 8)
-                {
-                    Console.Write("eight");
-                }
-                if (thousandCounter == 7)
-                {
-                    Console.Write("seven");
-                }
-                if (thousandCounter == 6)
-                {
-                    Console.Write("six");
-                }
-                if (thousandCounter == 5)
-                {
-                    Console.Write("five");
-                }
-                if (thousandCounter == 4)
-                {
-                    Console.Write("four");
-                }
-                if (thousandCounter == 3)
-                {
-                    Console.Write("three");
-                }
-                if (thousandCounter == 2)
-                {
-                    Console.Write("two");
-                }
-                if (thousandCounter == 1)
-                {
-                    Console.Write("one");
-                }
-                Console.Write(" thousand");
+                return "eight" + thousand;
+            }
+            if (thousandCounter == 7)
+            {
+                return "seven" + thousand;
+            }
+            if (thousandCounter == 6)
+            {
+                return "six" + thousand;
+            }
+            if (thousandCounter == 5)
+            {
+                return "five" + thousand;
+            }
+            if (thousandCounter == 4)
+            {
+                return "four" + thousand;
+            }
+            if (thousandCounter == 3)
+            {
+                return "three" + thousand;
+            }
+            if (thousandCounter == 2)
+            {
+                return "two" + thousand;
+            }
+            if (thousandCounter == 1)
+            {
+                return "one" + thousand;
             }
 
-            // Write out hundreds.
-            int hundredCounter = 0;
-            while (number >= 100)
+            // There are no thousands, return an empty string.
+            return "";
+        }
+
+        static string GetHundredsText(int number)
+        {
+            int hundredCounter = GetNumberOf(DecimalPosition.Hundreds, number);
+
+            var hundred = " hundred";
+            if (hundredCounter == 9)
             {
-                hundredCounter++;
-                number -= 100;
+                return "nine" + hundred;
             }
-            if (hundredCounter != 0)
+            if (hundredCounter == 8)
             {
-                if (hundredCounter == 9)
-                {
-                    Console.Write(" nine");
-                }
-                if (hundredCounter == 8)
-                {
-                    Console.Write(" eight");
-                }
-                if (hundredCounter == 7)
-                {
-                    Console.Write(" seven");
-                }
-                if (hundredCounter == 6)
-                {
-                    Console.Write(" six");
-                }
-                if (hundredCounter == 5)
-                {
-                    Console.Write(" five");
-                }
-                if (hundredCounter == 4)
-                {
-                    Console.Write(" four");
-                }
-                if (hundredCounter == 3)
-                {
-                    Console.Write(" three");
-                }
-                if (hundredCounter == 2)
-                {
-                    Console.Write(" two");
-                }
-                if (hundredCounter == 1)
-                {
-                    Console.Write(" one");
-                }
-                Console.Write(" hundred ");
+                return "eight" + hundred;
+            }
+            if (hundredCounter == 7)
+            {
+                return "seven" + hundred;
+            }
+            if (hundredCounter == 6)
+            {
+                return "six" + hundred;
+            }
+            if (hundredCounter == 5)
+            {
+                return "five" + hundred;
+            }
+            if (hundredCounter == 4)
+            {
+                return "four" + hundred;
+            }
+            if (hundredCounter == 3)
+            {
+                return "three" + hundred;
+            }
+            if (hundredCounter == 2)
+            {
+                return "two" + hundred;
+            }
+            if (hundredCounter == 1)
+            {
+                return "one" + hundred;
             }
 
-            // Write out the tens. 
-            int tensCounter = 0;
-            while (number >= 10)
-            {
-                tensCounter++;
-                number -= 10;
-            }
-            // Single counter is included here because 
-            // they are needed to writ out the teens. 
-            int singleCounter = 0;
-            while (number >= 1)
-            {
-                singleCounter++;
-                number -= 1;
-            }
+            // There are no hundreds.
+            return "";
+        }
+
+        public static string GetTensText(int number)
+        {
+            int tensCounter = GetNumberOf(DecimalPosition.Tens, number);
+            int onesCounter = GetNumberOf(DecimalPosition.Ones, number);
+
             if (tensCounter != 0)
             {
                 if (tensCounter == 9)
                 {
-                    Console.Write(" ninety");
+                    return "ninety";
                 }
                 if (tensCounter == 8)
                 {
-                    Console.Write(" eighty");
+                    return "eighty";
                 }
                 if (tensCounter == 7)
                 {
-                    Console.Write(" seventy");
+                    return "seventy";
                 }
                 if (tensCounter == 6)
                 {
-                    Console.Write(" sixty");
+                    return "sixty";
                 }
                 if (tensCounter == 5)
                 {
-                    Console.Write(" fifty");
+                    return "fifty";
                 }
                 if (tensCounter == 4)
                 {
-                    Console.Write(" forty");
+                    return "forty";
                 }
                 if (tensCounter == 3)
                 {
-                    Console.Write(" thirty");
+                    return "thirty";
                 }
                 if (tensCounter == 2)
                 {
-                    Console.Write(" twenty");
+                    return "twenty";
                 }
                 if (tensCounter == 1)
                 {
-                    if (singleCounter == 9)
+                    if (onesCounter == 9)
                     {
-                        Console.Write(" nineteen");
+                        return "nineteen";
                     }
-                    if (singleCounter == 8)
+                    if (onesCounter == 8)
                     {
-                        Console.Write(" eighteen");
+                        return "eighteen";
                     }
-                    if (singleCounter == 7)
+                    if (onesCounter == 7)
                     {
-                        Console.Write(" seventeen");
+                        return "seventeen";
                     }
-                    if (singleCounter == 6)
+                    if (onesCounter == 6)
                     {
-                        Console.Write(" sixteen");
+                        return "sixteen";
                     }
-                    if (singleCounter == 5)
+                    if (onesCounter == 5)
                     {
-                        Console.Write(" fifteen");
+                        return "fifteen";
                     }
-                    if (singleCounter == 4)
+                    if (onesCounter == 4)
                     {
-                        Console.Write(" fourteen");
+                        return "fourteen";
                     }
-                    if (singleCounter == 3)
+                    if (onesCounter == 3)
                     {
-                        Console.Write(" thirteen");
+                        return "thirteen";
                     }
-                    if (singleCounter == 2)
+                    if (onesCounter == 2)
                     {
-                        Console.Write(" twelve");
+                        return "twelve";
                     }
-                    if (singleCounter == 1)
+                    if (onesCounter == 1)
                     {
-                        Console.Write(" eleven");
+                        return "eleven";
                     }
-                    if (singleCounter == 0)
+                    if (onesCounter == 0)
                     {
-                        Console.Write("ten");
+                        return "ten";
                     }
                 }
+            }
+            return "";
+        }
+
+        public static string GetOnesText(int number)
+        {
+            int singleCounter = GetNumberOf(DecimalPosition.Ones, number);
+
+            if (singleCounter == 9)
+            {
+                return "nine";
+            }
+            if (singleCounter == 8)
+            {
+                return "eight";
+            }
+            if (singleCounter == 7)
+            {
+                return "seven";
+            }
+            if (singleCounter == 6)
+            {
+                return "six";
+            }
+            if (singleCounter == 5)
+            {
+                return "five";
+            }
+            if (singleCounter == 4)
+            {
+                return "four";
+            }
+            if (singleCounter == 3)
+            {
+                return "three";
+            }
+            if (singleCounter == 2)
+            {
+                return "two";
+            }
+            if (singleCounter == 1)
+            {
+                return "one";
+            }
+            if (number == 0)
+            {
+                return "zero";
             }
 
-            // There were no tens to write out, so the 
-            // singles will not need to be written out 
-            // as teens. 
-            if (singleCounter != 0 && tensCounter != 1)
+            return "";
+        }
+
+        private static int GetNumberOf(DecimalPosition decimalPlace, int number)
+        {
+            // Check if the number has enough decimal places.
+            // if not, there are zero of this decimal place. 
+            int numberDecimalPlaces = number.ToString().Length;
+            if ((int) decimalPlace > numberDecimalPlaces) return 0;
+
+            var numberString = number.ToString();
+            var charactorPosition = numberString.Length - (int)decimalPlace;
+            var decimalPlaceCharactor = numberString[charactorPosition];
+            int counter = int.Parse(decimalPlaceCharactor.ToString());
+
+            return counter;
+        }
+
+        public static string GetFullNumberText(int number)
+        {
+            var thousandsText = GetThousandsText(number);
+            var hundredsText = GetHundredsText(number);
+            var tensText = GetTensText(number);
+
+            // Get the ones text if it is not already used by the tens text.
+            string onesText;
+            var numberOfTens = GetNumberOf(DecimalPosition.Tens, number);
+            bool isTeen = numberOfTens == 1;
+            // If the number is a teen, the ones position is 
+            // covered by the get tens text. 
+            if (isTeen)
             {
-                if (singleCounter == 9)
-                {
-                    Console.Write(" nine");
-                }
-                if (singleCounter == 8)
-                {
-                    Console.Write(" eight");
-                }
-                if (singleCounter == 7)
-                {
-                    Console.Write(" seven");
-                }
-                if (singleCounter == 6)
-                {
-                    Console.Write(" six");
-                }
-                if (singleCounter == 5)
-                {
-                    Console.Write(" five");
-                }
-                if (singleCounter == 4)
-                {
-                    Console.Write(" four");
-                }
-                if (singleCounter == 3)
-                {
-                    Console.Write(" three");
-                }
-                if (singleCounter == 2)
-                {
-                    Console.Write(" two");
-                }
-                if (singleCounter == 1)
-                {
-                    Console.Write(" one");
-                }
+                onesText = "";
             }
-            Console.ReadLine();
-        }       
+            // If the number is not a teen, the ones 
+            // text is still needed. 
+            else
+            {
+                onesText = GetOnesText(number);
+            }
+
+            // Combine the text into a single string. 
+            var fullNumber = string.Join(" ", thousandsText, hundredsText, tensText, onesText);
+            return fullNumber;
+        }
+
+        enum DecimalPosition
+        {
+            Thousands = 4,
+            Hundreds = 3,
+            Tens = 2,
+            Ones = 1
+        }
     }
-    
 }
