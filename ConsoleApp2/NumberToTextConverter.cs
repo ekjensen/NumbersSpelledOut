@@ -264,6 +264,8 @@ namespace ConsoleApp2
 
         public string GetText(int number)
         {
+            var negativeText = number < 0 ? "negative" : "";
+            number = Math.Abs(number);
             var thousandsText = GetThousandsText(number);
             var hundredsText = GetHundredsText(number);
             var tensText = GetTensText(number);
@@ -286,7 +288,7 @@ namespace ConsoleApp2
             }
 
             // Combine the text into a single string. 
-            var defaultText = string.Join(" ", thousandsText, hundredsText, tensText, onesText);
+            var defaultText = string.Join(" ", negativeText, thousandsText, hundredsText, tensText, onesText);
             var words = defaultText.Split(' ');
 
 

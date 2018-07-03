@@ -22,9 +22,9 @@ namespace ConsoleApp2
                 return;
             }
             // The program does not support negative numbers. 
-            if (number <= 0)
+            if (number < -9999)
             {
-                Console.WriteLine("This program only accepts numbers greather or equal to.");
+                Console.WriteLine("This program only accepts numbers greather or equal to -9999.");
                 return;
             }
 
