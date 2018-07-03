@@ -13,7 +13,7 @@ namespace NumberConverter
         public LetterCase LetterCase { get; }
         public string SpaceCharactor { get; }
 
-        public NumberToTextHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase, string spaceCharactor = " ")
+        public NumberToTextHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase)
         {
             switch (decimalPositionGrouping)
             {
@@ -43,7 +43,7 @@ namespace NumberConverter
 
             }
             LetterCase = letterCase;
-            SpaceCharactor = spaceCharactor;
+            SpaceCharactor = " ";
         }
 
         private string GetHundredsText(int number)

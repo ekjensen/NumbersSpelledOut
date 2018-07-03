@@ -17,10 +17,10 @@ namespace NumberConverter
         /// </summary>
         /// <param name="letterCase"></param>
         /// <param name="spaceCharactor">The charactor to use to seperate each word with.</param>
-        public NumberToTextConverter(LetterCase letterCase, string spaceCharactor = " ")
+        public NumberToTextConverter(LetterCase letterCase)
         {
             Case = letterCase;
-            SpaceCharactor = spaceCharactor;
+            SpaceCharactor = " ";
         }
 
         public string GetText(long number)
