@@ -22,7 +22,7 @@ namespace ConsoleApp2
             }
         }
 
-        static string WrittenOut(int number)
+        static void WrittenOut(int number)
         {
             // Write out thousands. 
             int thousandCounter = 0;
@@ -257,7 +257,6 @@ namespace ConsoleApp2
                 }
             }
             Console.ReadLine();
-            return "";
         }       
     }
     
