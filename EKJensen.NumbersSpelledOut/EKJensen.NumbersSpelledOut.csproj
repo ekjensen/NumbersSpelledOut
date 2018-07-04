@@ -51,7 +51,11 @@
     <Compile Include="Spellers\NumberToTextSpeller.cs" />
     <Compile Include="Spellers\NumberToTextSpellingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\LetterCaseHelper.cs" />
+    <Compile Include="Utilities\TextTransformations\ITransformText.cs" />
+    <Compile Include="Utilities\TextTransformations\LowerCaseTransformation.cs" />
+    <Compile Include="Utilities\TextTransformations\TitleTextTransformation.cs" />
+    <Compile Include="Utilities\TextTransformations\TransformTextFactory.cs" />
+    <Compile Include="Utilities\TextTransformations\UpperCaseTransformation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

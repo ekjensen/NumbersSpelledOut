@@ -9,10 +9,9 @@ namespace EKJensen.NumbersSpelledOut.Spellers
     internal class NumberToTextSpellingHelper
     {
         public string DecimalGrouping { get; }
-        public LetterCase LetterCase { get; }
-        private readonly LetterCaseHelper _caseHelper;
+        private readonly ITransformText _textTransformation;
 
-        public NumberToTextSpellingHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase)
+        public NumberToTextSpellingHelper(DecimalPosition decimalPositionGrouping, ITransformText textTransformation)
         {
             switch (decimalPositionGrouping)
             {
@@ -41,8 +40,8 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                     throw new ArgumentException(decimalPositionGrouping + " is not supported");
 
             }
-            LetterCase = letterCase;
-            _caseHelper = new LetterCaseHelper(letterCase);
+
+            _textTransformation = new TitleTextTransformation();
         }
 
         private string GetHundredsText(int number)
@@ -339,9 +338,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 
             var fullNumberText = string.Join(" ", numberTextWithGroupText);
 
-            return _caseHelper.Transform(fullNumberText);
-
-            throw new NotImplementedException(LetterCase + " is not supported.");
+            return _textTransformation.Transform(fullNumberText);
         }
     }
 }

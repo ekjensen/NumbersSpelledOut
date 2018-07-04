@@ -1,29 +1,31 @@
 ﻿using EKJensen.NumbersSpelledOut.Spellers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EKJensen.NumbersSpelledOut.Utilities;
 
 namespace EKJensen.NumbersSpelledOut
 {
     public static class FloatingPointSpelledOut
     {
-        public static string ToNumberString(this double number, LetterCase caseOptions = LetterCase.LowerCase)
+        public static string ToNumberString(this double number, LetterCase letterCase = LetterCase.LowerCase)
         {
-            var speller = new FloatingPointSpeller(caseOptions);
+            var speller = new FloatingPointSpeller(
+                TransformTextFactory.GetTransformation(letterCase));
+
             return speller.Spell(number);
         }
 
-        public static string ToNumberString(this float number, LetterCase caseOptions = LetterCase.LowerCase)
+        public static string ToNumberString(this float number, LetterCase letterCase = LetterCase.LowerCase)
         {
-            var speller = new FloatingPointSpeller(caseOptions);
+            var speller = new FloatingPointSpeller(
+                TransformTextFactory.GetTransformation(letterCase));
+
             return speller.Spell(number);
         }
 
-        public static string ToNumberString(this decimal number, LetterCase caseOptions = LetterCase.LowerCase)
+        public static string ToNumberString(this decimal number, LetterCase letterCase = LetterCase.LowerCase)
         {
-            var speller = new FloatingPointSpeller(caseOptions);
+            var speller = new FloatingPointSpeller(
+                TransformTextFactory.GetTransformation(letterCase));
+
             return speller.Spell(number);
         }
     }

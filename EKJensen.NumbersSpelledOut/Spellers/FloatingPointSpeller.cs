@@ -9,15 +9,13 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 {
     internal class FloatingPointSpeller : ISpellNumber<decimal>, ISpellNumber<double>, ISpellNumber<float>
     {
-        public LetterCase Case { get; }
+        public ITransformText _textTransformer;
         private readonly NumberToTextSpeller _speller;
-        private readonly LetterCaseHelper _caseHelper;
 
-        public FloatingPointSpeller(LetterCase letterCase)
+        public FloatingPointSpeller(ITransformText textTransformer)
         {
-            Case = letterCase;
-            _speller = new NumberToTextSpeller(letterCase);
-            _caseHelper = new LetterCaseHelper(letterCase);
+            _textTransformer = textTransformer;
+            _speller = new NumberToTextSpeller(textTransformer);
         }
 
         public string Spell(decimal number)
@@ -59,7 +57,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             var leftSideString = _speller.Spell(leftSide);
             var rightSideString = _speller.Spell(rightSide);
 
-            return _caseHelper.Transform(
+            return _textTransformer.Transform(
                 leftSideString + " point " + rightSideString);
         }
     }

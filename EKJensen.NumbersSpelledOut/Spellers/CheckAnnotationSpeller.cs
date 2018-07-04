@@ -9,15 +9,13 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 {
     public class CheckAnnotationSpeller : ISpellNumber<double>, ISpellNumber<float>, ISpellNumber<decimal>
     {
-        public LetterCase LetterCase { get; }
         private readonly NumberToTextSpeller _speller;
-        private LetterCaseHelper _caseHelper;
+        private ITransformText _textTransformer;
 
-        public CheckAnnotationSpeller(LetterCase letterCase)
+        public CheckAnnotationSpeller(ITransformText textTransformer)
         {
-            LetterCase = letterCase;
-            _speller = new NumberToTextSpeller(LetterCase);
-            _caseHelper = new LetterCaseHelper(LetterCase);
+            _speller = new NumberToTextSpeller(textTransformer);
+            _textTransformer = textTransformer;
         }
 
         public string Spell(double number)
@@ -63,7 +61,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             var leftSideText = _speller.Spell(leftSide);
             var rightSideText = rightSide + "/100";
 
-            return _caseHelper.Transform(leftSideText + " and " + rightSideText);
+            return _textTransformer.Transform(leftSideText + " and " + rightSideText);
         }
     }
 }
