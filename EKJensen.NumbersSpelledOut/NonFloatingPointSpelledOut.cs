@@ -1,6 +1,7 @@
 ﻿using System;
 using EKJensen.NumbersSpelledOut.Spellers;
 using EKJensen.NumbersSpelledOut.Utilities;
+using EKJensen.NumbersSpelledOut.Utilities.TextTransformations;
 
 namespace EKJensen.NumbersSpelledOut
 {

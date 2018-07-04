@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckAnnotationsSpelledOut.cs" />
+    <Compile Include="DollarsAndCents.cs" />
     <Compile Include="FloatingPointSpelledOut.cs" />
     <Compile Include="LetterCase.cs" />
     <Compile Include="NonFloatingPointSpelledOut.cs" />
@@ -56,6 +57,9 @@
     <Compile Include="Utilities\TextTransformations\TitleTextTransformation.cs" />
     <Compile Include="Utilities\TextTransformations\TransformTextFactory.cs" />
     <Compile Include="Utilities\TextTransformations\UpperCaseTransformation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

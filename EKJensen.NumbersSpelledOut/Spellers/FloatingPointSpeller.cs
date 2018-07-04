@@ -1,4 +1,5 @@
 ﻿using EKJensen.NumbersSpelledOut.Utilities;
+using EKJensen.NumbersSpelledOut.Utilities.TextTransformations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
 ﻿using EKJensen.NumbersSpelledOut.Utilities;
+using EKJensen.NumbersSpelledOut.Utilities.TextTransformations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,18 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 {
     public class CheckAnnotationSpeller : ISpellNumber<double>, ISpellNumber<float>, ISpellNumber<decimal>
     {
+        public bool IncludeWordDollars { get; }
+        public bool IncludeWordCents { get; }
+
         private readonly NumberToTextSpeller _speller;
         private ITransformText _textTransformer;
 
-        public CheckAnnotationSpeller(ITransformText textTransformer)
+        public CheckAnnotationSpeller(ITransformText textTransformer, bool includeWordDollars, bool includeWordCents)
         {
             _speller = new NumberToTextSpeller(textTransformer);
             _textTransformer = textTransformer;
+            IncludeWordDollars = includeWordDollars;
+            IncludeWordCents = includeWordCents;
         }
 
         public string Spell(double number)
@@ -61,7 +67,10 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             var leftSideText = _speller.Spell(leftSide);
             var rightSideText = rightSide + "/100";
 
-            return _textTransformer.Transform(leftSideText + " and " + rightSideText);
+            var dollars = IncludeWordDollars ? " dollars" : "";
+            var cents = IncludeWordCents ? " cents" : "";
+
+            return _textTransformer.Transform(leftSideText + dollars + " and " + rightSideText + cents);
         }
     }
 }
