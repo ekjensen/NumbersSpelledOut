@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EKJensen.NumbersSpelledOut.Utilities
+namespace EKJensen.NumbersSpelledOut.Utilities.TextTransformations
 {
     internal static class TransformTextFactory
     {

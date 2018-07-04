@@ -11,7 +11,7 @@ namespace EKJensen.NumbersSpelledOut.Tests
         {
             var twentyDollars = (20.0).ToCheckAnnotation();
 
-            Assert.AreEqual("twenty and 0/100", twentyDollars);
+            Assert.AreEqual("twenty dollars and 0/100", twentyDollars);
         }
     }
 }

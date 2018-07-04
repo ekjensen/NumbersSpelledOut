@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace EKJensen.NumbersSpelledOut.Utilities
+namespace EKJensen.NumbersSpelledOut.Utilities.TextTransformations
 {
     class TitleTextTransformation : ITransformText
     {
