@@ -1,11 +1,5 @@
 ﻿using EKJensen.NumbersSpelledOut.Spellers;
-using EKJensen.NumbersSpelledOut.Utilities;
 using EKJensen.NumbersSpelledOut.Utilities.TextTransformations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EKJensen.NumbersSpelledOut
 {

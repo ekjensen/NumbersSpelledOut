@@ -58,8 +58,6 @@
     <Compile Include="Utilities\TextTransformations\TransformTextFactory.cs" />
     <Compile Include="Utilities\TextTransformations\UpperCaseTransformation.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

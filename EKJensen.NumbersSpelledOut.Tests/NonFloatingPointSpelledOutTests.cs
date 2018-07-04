@@ -114,7 +114,7 @@ namespace EKJensen.NumbersSpelledOut.Tests
         [TestMethod]
         public void Septilions_conversion_returns_text()
         {
-            var septillion = ((long)9223372036854775807).ToNumberString();
+            var septillion = (9223372036854775807).ToNumberString();
             Assert.AreEqual(
                 "nine septillion two hundred and twenty three quadrillion three hundred and seventy two trillion thirty six billion eight hundred and fifty four million seven hundred and seventy five thousand eight hundred and seven", 
                 septillion);

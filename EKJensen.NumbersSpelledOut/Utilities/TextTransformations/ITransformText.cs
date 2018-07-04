@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EKJensen.NumbersSpelledOut.Utilities.TextTransformations
+﻿namespace EKJensen.NumbersSpelledOut.Utilities.TextTransformations
 {
     public interface ITransformText
     {
