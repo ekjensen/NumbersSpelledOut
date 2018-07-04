@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EKJensen.NumbersSpelledOut.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,14 @@ namespace EKJensen.NumbersSpelledOut.Spellers
     public class CheckAnnotationSpeller : ISpellNumber<double>, ISpellNumber<float>, ISpellNumber<decimal>
     {
         public LetterCase LetterCase { get; }
-        private NumberToTextSpeller _speller;
+        private readonly NumberToTextSpeller _speller;
+        private LetterCaseHelper _caseHelper;
 
         public CheckAnnotationSpeller(LetterCase letterCase)
         {
             LetterCase = letterCase;
             _speller = new NumberToTextSpeller(LetterCase);
+            _caseHelper = new LetterCaseHelper(LetterCase);
         }
 
         public string Spell(double number)
@@ -60,17 +63,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             var leftSideText = _speller.Spell(leftSide);
             var rightSideText = rightSide + "/100";
 
-            // Perform the needed case transformations. 
-            switch (LetterCase)
-            {
-                case LetterCase.TitleCase:
-                case LetterCase.LowerCase:
-                    return leftSideText + " and " + rightSideText;
-                case LetterCase.UpperCase:
-                    return leftSideText + " AND " + rightSideText;
-                default:
-                    throw new NotImplementedException(LetterCase + " is not supported");
-            }
+            return _caseHelper.Transform(leftSideText + " and " + rightSideText);
         }
     }
 }

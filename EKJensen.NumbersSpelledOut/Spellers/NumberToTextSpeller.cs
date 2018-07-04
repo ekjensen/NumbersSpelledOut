@@ -1,15 +1,14 @@
-﻿using System;
+﻿using EKJensen.NumbersSpelledOut.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace EKJensen.NumbersSpelledOut.Spellers
 {
-    internal class NumberToTextSpeller : 
-        ISpellNumber<long>, 
-        ISpellNumber<ulong>
+    internal class NumberToTextSpeller : ISpellNumber<long>, ISpellNumber<ulong>
     {
         public LetterCase Case { get; }
-        public string SpaceCharactor { get; }
+        private readonly LetterCaseHelper _caseHelper;
 
         /// <summary>
         /// 
@@ -19,7 +18,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
         public NumberToTextSpeller(LetterCase letterCase)
         {
             Case = letterCase;
-            SpaceCharactor = " ";
+            _caseHelper = new LetterCaseHelper(letterCase);
         }
 
         public string Spell(ulong number)
@@ -36,7 +35,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var substring = longText.Substring(nextStartingIndex, len + 3 - 21);
                 nextStartingIndex = len % 3;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Septillions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Septillions, Case);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -47,7 +46,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Quadrillions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Quadrillions, Case);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -58,7 +57,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Trillions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Trillions, Case);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -69,7 +68,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Billions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Billions, Case);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -80,7 +79,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Millions, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Millions, Case);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -91,7 +90,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 nextStartingIndex += forHowMany;
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Thousands, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Thousands, Case);
                 var text = helper.GetText(trimmedNumber);
                 if (trimmedNumber > 0) numberParts.Add(text);
             }
@@ -101,7 +100,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 var forHowMany = len >= 3 ? 3 : len;
                 var substring = longText.Substring(nextStartingIndex, forHowMany);
                 var trimmedNumber = int.Parse(substring);
-                var helper = new NumberToTextSpellingHelper(DecimalPosition.Ones, Case, SpaceCharactor);
+                var helper = new NumberToTextSpellingHelper(DecimalPosition.Ones, Case);
                 var text = helper.GetText(trimmedNumber);
 
                 if (text == "zero")
@@ -115,20 +114,14 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 {
                     if (substring.Length <= 2 && numberParts.Count > 0)
                     {
-                        if (Case == LetterCase.UpperCase)
-                        {
-                            numberParts.Add("AND");
-                        }
-                        else
-                        {
-                            numberParts.Add("and");
-                        }
+                        numberParts.Add("and");
                     }
                     numberParts.Add(text);
                 }
             }
 
-            return string.Join(SpaceCharactor, numberParts);
+            var fullText = string.Join(" ", numberParts);
+            return _caseHelper.Transform(fullText);
         }
 
         public string Spell(long number)
@@ -141,24 +134,10 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 
             var text = Spell((ulong)Math.Abs(number));
             if (negative == "") return text;
-            switch (Case)
-            {
-                case LetterCase.LowerCase:
-                    text = negative + SpaceCharactor + text;
-                    break;
-                case LetterCase.UpperCase:
-                    text = negative + SpaceCharactor + text;
-                    break;
-                case LetterCase.TitleCase:
-                    text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(negative.ToLower())
-                        + SpaceCharactor
-                        + text;
-                    break;
-                default:
-                    throw new NotImplementedException(Case + " is not supported.");
-            }
 
+            _caseHelper.Transform(text = negative + " " + text);
             return text;
         }
+
     }
 }

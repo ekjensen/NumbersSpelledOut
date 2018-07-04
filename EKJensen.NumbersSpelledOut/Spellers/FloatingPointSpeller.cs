@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EKJensen.NumbersSpelledOut.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,14 @@ namespace EKJensen.NumbersSpelledOut.Spellers
     internal class FloatingPointSpeller : ISpellNumber<decimal>, ISpellNumber<double>, ISpellNumber<float>
     {
         public LetterCase Case { get; }
-        private NumberToTextSpeller _speller;
+        private readonly NumberToTextSpeller _speller;
+        private readonly LetterCaseHelper _caseHelper;
 
         public FloatingPointSpeller(LetterCase letterCase)
         {
             Case = letterCase;
             _speller = new NumberToTextSpeller(letterCase);
+            _caseHelper = new LetterCaseHelper(letterCase);
         }
 
         public string Spell(decimal number)
@@ -56,17 +59,8 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             var leftSideString = _speller.Spell(leftSide);
             var rightSideString = _speller.Spell(rightSide);
 
-            switch (Case)
-            {
-                case LetterCase.LowerCase:
-                    return leftSideString + " point " + rightSideString;
-                case LetterCase.UpperCase:
-                    return leftSideString + " POINT " + rightSideString;
-                case LetterCase.TitleCase:
-                    return leftSideString + " Point " + rightSideString;
-                default:
-                    throw new NotFiniteNumberException(Case + " not yet supported.");
-            }
+            return _caseHelper.Transform(
+                leftSideString + " point " + rightSideString);
         }
     }
 }

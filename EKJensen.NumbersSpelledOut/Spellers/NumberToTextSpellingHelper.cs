@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EKJensen.NumbersSpelledOut.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace EKJensen.NumbersSpelledOut.Spellers
     {
         public string DecimalGrouping { get; }
         public LetterCase LetterCase { get; }
-        public string SpaceCharactor { get; }
+        private readonly LetterCaseHelper _caseHelper;
 
-        public NumberToTextSpellingHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase, string spaceCharactor = " ")
+        public NumberToTextSpellingHelper(DecimalPosition decimalPositionGrouping, LetterCase letterCase = LetterCase.LowerCase)
         {
             switch (decimalPositionGrouping)
             {
@@ -41,7 +42,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 
             }
             LetterCase = letterCase;
-            SpaceCharactor = spaceCharactor;
+            _caseHelper = new LetterCaseHelper(letterCase);
         }
 
         private string GetHundredsText(int number)
@@ -328,41 +329,17 @@ namespace EKJensen.NumbersSpelledOut.Spellers
 
         private string AddOptions(int originalNumber, string[] didgetWords)
         {
-            var didgetNumbersWithAnd = AddAnd(originalNumber, didgetWords);
-            var didgetWordsWithGroup = AddDecimalGroupingText(didgetNumbersWithAnd);
+            // Add the word and to the number to make the number sound more 
+            // natural. Ex. instead of "five hundred fifteen", "five hundred and fifteen".
+            var numberTextWithAnd = AddAnd(originalNumber, didgetWords);
 
-            if (LetterCase == LetterCase.UpperCase)
-            {
-                var upperCaseWords = didgetWordsWithGroup.Select(
-                    word => word.ToUpper().Replace(" ", SpaceCharactor));
+            // Decimal grouping text would be like appending thousand or million.
+            //  ex. three hundred million ... or ... five hundred and fifteen thousand.
+            var numberTextWithGroupText = AddDecimalGroupingText(numberTextWithAnd);
 
-                return string.Join(SpaceCharactor, upperCaseWords);
-            }
+            var fullNumberText = string.Join(" ", numberTextWithGroupText);
 
-            if (LetterCase == LetterCase.LowerCase)
-            {
-                var lowerCaseWords = didgetWordsWithGroup.Select(
-                    word => word.ToLower().Replace(" ", SpaceCharactor));
-
-                return string.Join(SpaceCharactor, lowerCaseWords);
-            }
-
-            if (LetterCase == LetterCase.TitleCase)
-            {
-                var titleWords = didgetWordsWithGroup.Select(word =>
-                        CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word.ToLower())
-                            .Replace(" ", SpaceCharactor)).ToList();
-
-                // And should be lower case. 
-                var index = titleWords.FindIndex(tw => tw == "And");
-                bool andWasFound = index >= 0;
-                if (andWasFound)
-                {
-                    titleWords[index] = "and";
-                }
-
-                return string.Join(SpaceCharactor, titleWords);
-            }
+            return _caseHelper.Transform(fullNumberText);
 
             throw new NotImplementedException(LetterCase + " is not supported.");
         }
