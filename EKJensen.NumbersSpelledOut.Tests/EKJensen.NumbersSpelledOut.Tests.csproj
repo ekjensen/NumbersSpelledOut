@@ -51,6 +51,7 @@
     <Compile Include="NonFloatingPointSpelledOutTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FloatingPointSpelledOutTests.cs" />
+    <Compile Include="CheckAnnotationsSpelledOutTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

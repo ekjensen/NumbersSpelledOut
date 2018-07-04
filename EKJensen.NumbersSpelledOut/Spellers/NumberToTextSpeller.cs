@@ -4,7 +4,9 @@ using System.Globalization;
 
 namespace EKJensen.NumbersSpelledOut.Spellers
 {
-    internal class NumberToTextSpeller
+    internal class NumberToTextSpeller : 
+        ISpellNumber<long>, 
+        ISpellNumber<ulong>
     {
         public LetterCase Case { get; }
         public string SpaceCharactor { get; }
@@ -20,7 +22,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             SpaceCharactor = " ";
         }
 
-        public string GetText(ulong number)
+        public string Spell(ulong number)
         {
             var longText = number.ToString();
             var len = longText.Length;
@@ -129,7 +131,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             return string.Join(SpaceCharactor, numberParts);
         }
 
-        public string GetText(long number)
+        public string Spell(long number)
         {
             var negative = "";
             if(number < 0)
@@ -137,7 +139,7 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 negative = "negative";
             }
 
-            var text = GetText((ulong)Math.Abs(number));
+            var text = Spell((ulong)Math.Abs(number));
             if (negative == "") return text;
             switch (Case)
             {

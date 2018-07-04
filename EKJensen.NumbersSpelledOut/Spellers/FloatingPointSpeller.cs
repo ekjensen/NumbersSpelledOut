@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EKJensen.NumbersSpelledOut.Spellers
 {
-    internal class FloatingPointSpeller
+    internal class FloatingPointSpeller : ISpellNumber<decimal>, ISpellNumber<double>, ISpellNumber<float>
     {
         public LetterCase Case { get; }
         private NumberToTextSpeller _speller;
@@ -17,21 +17,26 @@ namespace EKJensen.NumbersSpelledOut.Spellers
             _speller = new NumberToTextSpeller(letterCase);
         }
 
-        public string ToText(decimal number)
+        public string Spell(decimal number)
         {
             return ToNumberText(number.ToString());
         }
 
-        public string ToText(double number)
+        public string Spell(double number)
         {
             return ToNumberText(number.ToString());
         }
 
-        public string ToText(float number)
+        public string Spell(float number)
         {
             return ToNumberText(number.ToString());
         }
 
+        /// <summary>
+        /// Splits the number into 
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
         private string ToNumberText(string number)
         {
             var parts = number.Split('.');
@@ -48,8 +53,8 @@ namespace EKJensen.NumbersSpelledOut.Spellers
                 rightSide = long.Parse(parts[1]);
             }
 
-            var leftSideString = _speller.GetText(leftSide);
-            var rightSideString = _speller.GetText(rightSide);
+            var leftSideString = _speller.Spell(leftSide);
+            var rightSideString = _speller.Spell(rightSide);
 
             switch (Case)
             {

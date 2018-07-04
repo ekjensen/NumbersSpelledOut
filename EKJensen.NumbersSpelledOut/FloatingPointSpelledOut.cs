@@ -12,19 +12,19 @@ namespace EKJensen.NumbersSpelledOut
         public static string ToNumberString(this double number, LetterCase caseOptions = LetterCase.LowerCase)
         {
             var speller = new FloatingPointSpeller(caseOptions);
-            return speller.ToText(number);
+            return speller.Spell(number);
         }
 
         public static string ToNumberString(this float number, LetterCase caseOptions = LetterCase.LowerCase)
         {
             var speller = new FloatingPointSpeller(caseOptions);
-            return speller.ToText(number);
+            return speller.Spell(number);
         }
 
         public static string ToNumberString(this decimal number, LetterCase caseOptions = LetterCase.LowerCase)
         {
             var speller = new FloatingPointSpeller(caseOptions);
-            return speller.ToText(number);
+            return speller.Spell(number);
         }
     }
 }
